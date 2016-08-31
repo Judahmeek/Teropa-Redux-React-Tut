@@ -1,4 +1,5 @@
 import {List, Map} from 'immutable'; //all state.methods can be expected to come from the Immutable.js library
+export const INITIAL_STATE = Map();
 
 //I hate functions like this: exchanging one line of code for another ilne of code that has implicit assumptions (such as state having a set method)
 export function setEntries(state, entries) {
