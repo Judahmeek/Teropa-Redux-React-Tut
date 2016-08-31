@@ -17,13 +17,20 @@ function getWinners(vote) {
 
 //If there's a vote tally, concats winner to entry list, then
 //splits state into two maps: the entries being compared and all the other ones
+//unless there's only one entry left, in which case it sets final entry as the winner
 export function next(state) {
   const entries = state.get('entries')
                        .concat(getWinners(state.get('vote')));
-  return state.merge({
-    vote: Map({pair: entries.take(2)}),
-    entries: entries.skip(2)
-  });
+  if (entries.size === 1) {
+    return state.remove('vote')
+                .remove('entries')
+                .set('winner', entries.first());
+  } else {
+    return state.merge({
+      vote: Map({pair: entries.take(2)}),
+      entries: entries.skip(2)
+    });
+  }
 }
 
 export function vote(state, entry) {
