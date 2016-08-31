@@ -1,5 +1,5 @@
 import {List, Map} from 'immutable';
-import {expect, next} from 'chai';
+import {expect} from 'chai';
 
 import {setEntries, next, vote} from '../src/core';
 
