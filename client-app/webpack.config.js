@@ -4,7 +4,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?https://0.0.0.0:8080',
     'webpack/hot/only-dev-server',
-    './src/index.js'
+    './src/index.jsx'
   ],
   module: {
     loaders: [{
