@@ -7,6 +7,9 @@ import reducer from './reducer';
 import App from './components/App';
 import {VotingContainer} from './components/Voting';
 import {ResultsContainer} from './components/Results';
+import io from 'socket.io-client';
+
+const socket = io(`https://0.0.0.0:8080`); //Cloud 9 set up
 
 const store = createStore(reducer);
 store.dispatch({
