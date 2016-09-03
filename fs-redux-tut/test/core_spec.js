@@ -134,6 +134,24 @@ describe('functions', () => {
       }));
     });
   
+    it('ignores invalid votes', () => {
+      const state = Map({
+        pair: List.of('Trainspotting', '28 Days Later'),
+        tally: Map({
+          'Trainspotting': 3,
+          '28 Days Later': 2
+        })
+      });
+      const nextState = vote(state, 'Invalid Entry');
+      expect(nextState).to.equal(Map({
+        pair: List.of('Trainspotting', '28 Days Later'),
+        tally: Map({
+          'Trainspotting': 3,
+          '28 Days Later': 2
+        })
+      }));
+    });
+  
   });
 
 });
