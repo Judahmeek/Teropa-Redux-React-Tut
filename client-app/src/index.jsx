@@ -9,18 +9,13 @@ import {VotingContainer} from './components/Voting';
 import {ResultsContainer} from './components/Results';
 import io from 'socket.io-client';
 
-const socket = io(`https://0.0.0.0:8080`); //Cloud 9 set up
-
 const store = createStore(reducer);
-store.dispatch({
-  type: 'SET_STATE',
-  state: {
-    vote: {
-      pair: ['Sunshine', '28 Days Later'],
-      tally: {Sunshine: 2}
-    }
-  }
-});
+
+const socket = io(`${location.protocol}//${location.hostname}:8082`);
+
+socket.on('state', state =>
+  store.dispatch({type: 'SET_STATE', state})
+);
 
 const routes = <Route component={App}>
   <Route path="/results" component={ResultsContainer} />
