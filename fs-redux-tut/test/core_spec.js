@@ -37,7 +37,8 @@ describe('functions', () => {
       const nextState = next(state);
       expect(nextState).to.equal(Map({
         vote: Map({
-          pair: List.of('Trainspotting', '28 Days Later')
+          pair: List.of('Trainspotting', '28 Days Later'),
+          round: 1
         }),
         entries: List.of('Sunshine')
       }));
@@ -57,7 +58,8 @@ describe('functions', () => {
     const nextState = next(state);
     expect(nextState).to.equal(Map({
       vote: Map({
-        pair: List.of('Sunshine', 'Millions')
+        pair: List.of('Sunshine', 'Millions'),
+        round: 1
       }),
       entries: List.of('127 Hours', 'Trainspotting')
     }));
@@ -77,7 +79,8 @@ describe('functions', () => {
     const nextState = next(state);
     expect(nextState).to.equal(Map({
       vote: Map({
-        pair: List.of('Sunshine', 'Millions')
+        pair: List.of('Sunshine', 'Millions'),
+        round: 1
       }),
       entries: List.of('127 Hours', 'Trainspotting', '28 Days Later')
     }));
