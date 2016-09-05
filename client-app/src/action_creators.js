@@ -8,6 +8,7 @@ export function setState(state) {
 export function vote(entry) {
   return {
     meta: {remote: true},
+    clientId: localStorage.getItem('clientId'),
     type: 'VOTE',
     entry
   };

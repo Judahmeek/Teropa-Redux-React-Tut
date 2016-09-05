@@ -12,6 +12,13 @@ import {VotingContainer} from './components/Voting';
 import {ResultsContainer} from './components/Results';
 
 const socket = io(`${location.protocol}//${location.hostname}:8090`);
+
+socket.on('idQuery', query =>
+  socket.emit('clientId', localStorage.getItem('clientId'))
+);
+
+socket.on('clientId', clientId => localStorage.setItem('clientId', clientId))
+
 socket.on('state', state =>
   store.dispatch(setState(state))
 );

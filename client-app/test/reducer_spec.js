@@ -47,11 +47,34 @@ describe('reducer', () => {
     }));
   });
   
+  it('removes hasChosen upon changing entry pairs', () => {
+    const initialState = Map({
+      vote: Map({
+        pair: List(['Trainspotting', '28 Days Later'])
+      })
+    });
+    const action = {
+      type: 'SET_STATE',
+      state: Map({
+        vote: Map({
+          pair: List(['Trainspotting', 'Sunshine'])
+        }),
+        hasChosen: "old state"
+      })
+    };
+    const nextState = reducer(initialState, action);
+
+    expect(nextState).to.equal(fromJS({
+      vote: {
+        pair: ['Trainspotting', 'Sunshine']
+      }
+    }));
+  });
+  
   it('handles VOTE by setting hasChosen', () => {
     const state = fromJS({
       vote: {
         pair: ['Trainspotting', '28 Days Later'],
-        round: 1,
         tally: {Trainspotting: 1}
       }
     });
@@ -61,13 +84,9 @@ describe('reducer', () => {
     expect(nextState).to.equal(fromJS({
       vote: {
         pair: ['Trainspotting', '28 Days Later'],
-        round: 1,
         tally: {Trainspotting: 1}
       },
-      hasChosen: {
-        entry: 'Trainspotting',
-        round: 1
-      }
+      hasChosen: 'Trainspotting'
     }));
   });
 
@@ -85,36 +104,6 @@ describe('reducer', () => {
       vote: {
         pair: ['Trainspotting', '28 Days Later'],
         tally: {Trainspotting: 1}
-      }
-    }));
-  });
-
-  it('removes hasChosen on SET_STATE if round changes', () => {
-    const initialState = fromJS({
-      vote: {
-        pair: ['Trainspotting', '28 Days Later'],
-        tally: {Trainspotting: 1}
-      },
-      hasChosen: {
-        entry: 'Trainspotting',
-        round: 1
-      }
-    });
-    const action = {
-      type: 'SET_STATE',
-      state: {
-        vote: {
-          pair: ['Sunshine', 'Slumdog Millionaire'],
-          round: 2
-        }
-      }
-    };
-    const nextState = reducer(initialState, action);
-  
-    expect(nextState).to.equal(fromJS({
-      vote: {
-        pair: ['Sunshine', 'Slumdog Millionaire'],
-        round: 2
       }
     }));
   });

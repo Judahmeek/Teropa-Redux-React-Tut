@@ -1,4 +1,5 @@
-import {Map, fromJS} from 'immutable';
+import {Map, List} from 'immutable';
+import {INITIAL_STATE} from '../src/core'
 import {expect} from 'chai';
 
 import reducer from '../src/reducer';
@@ -6,55 +7,62 @@ import reducer from '../src/reducer';
 describe('reducer', () => {
 
   it('handles SET_ENTRIES', () => {
-    const initialState = Map();
     const action = {type: 'SET_ENTRIES', entries: ['Trainspotting']};
-    const nextState = reducer(initialState, action);
+    const nextState = reducer(INITIAL_STATE, action);
 
-    expect(nextState).to.equal(fromJS({
-      entries: ['Trainspotting']
+    expect(nextState).to.equal(Map({
+      entries: List(['Trainspotting'])
     }));
   });
 
   it('handles NEXT', () => {
-    const initialState = fromJS({
-      entries: ['Trainspotting', '28 Days Later']
+    const initialState = Map({
+      entries: List(['Trainspotting', '28 Days Later'])
     });
     const action = {type: 'NEXT'};
     const nextState = reducer(initialState, action);
 
-    expect(nextState).to.equal(fromJS({
-      vote: {
-        pair: ['Trainspotting', '28 Days Later'],
-        round: 1
-      },
-      entries: []
+    expect(nextState).to.equal(Map({
+      client: Map({
+        vote: Map({
+          pair: List(['Trainspotting', '28 Days Later'])
+        })
+      }),
+      entries: List([])
     }));
   });
 
   it('handles VOTE', () => {
-    const initialState = fromJS({
-      vote: {
-        pair: ['Trainspotting', '28 Days Later']
-      },
-      entries: []
+    const initialState = Map({
+      client: Map({
+        vote: Map({
+          pair: List(['Trainspotting', '28 Days Later'])
+        })
+      }),
+      entries: List([])
     });
-    const action = {type: 'VOTE', entry: 'Trainspotting'};
+    const action = {type: 'VOTE', clientId: 'voter1', entry: 'Trainspotting'};
     const nextState = reducer(initialState, action);
 
-    expect(nextState).to.equal(fromJS({
-      vote: {
-        pair: ['Trainspotting', '28 Days Later'],
-        tally: {Trainspotting: 1}
-      },
-      entries: []
+    expect(nextState).to.equal(Map({
+      client: Map({
+        vote: Map({
+          pair: List(['Trainspotting', '28 Days Later']),
+          tally: Map({Trainspotting: 1}),
+          votes: Map({
+            voter1: 'Trainspotting'
+          })
+        })
+      }),
+      entries: List([])
     }));
   });
 
   it('has an initial state', () => {
     const action = {type: 'SET_ENTRIES', entries: ['Trainspotting']};
     const nextState = reducer(undefined, action);
-    expect(nextState).to.equal(fromJS({
-      entries: ['Trainspotting']
+    expect(nextState).to.equal(Map({
+      entries: List(['Trainspotting'])
     }));
   });
 
@@ -67,10 +75,12 @@ describe('reducer', () => {
       {type: 'VOTE', entry: 'Trainspotting'},
       {type: 'NEXT'}
     ];
-    const finalState = actions.reduce(reducer, Map());
+    const finalState = actions.reduce(reducer, INITIAL_STATE);
   
-    expect(finalState).to.equal(fromJS({
-      winner: 'Trainspotting'
+    expect(finalState).to.equal(Map({
+      client: Map({
+        winner: 'Trainspotting'
+      })
     }));
   });
 });
