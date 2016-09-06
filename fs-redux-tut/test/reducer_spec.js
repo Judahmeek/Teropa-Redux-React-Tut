@@ -11,7 +11,8 @@ describe('reducer', () => {
     const nextState = reducer(INITIAL_STATE, action);
 
     expect(nextState).to.equal(Map({
-      entries: List(['Trainspotting'])
+      entries: List(['Trainspotting']),
+      initialEntries: List(['Trainspotting'])
     }));
   });
 
@@ -62,7 +63,8 @@ describe('reducer', () => {
     const action = {type: 'SET_ENTRIES', entries: ['Trainspotting']};
     const nextState = reducer(undefined, action);
     expect(nextState).to.equal(Map({
-      entries: List(['Trainspotting'])
+      entries: List(['Trainspotting']),
+      initialEntries: List(['Trainspotting'])
     }));
   });
 
@@ -80,7 +82,8 @@ describe('reducer', () => {
     expect(finalState).to.equal(Map({
       client: Map({
         winner: 'Trainspotting'
-      })
+      }),
+      initialEntries: List(['Trainspotting', '28 Days Later'])
     }));
   });
 });

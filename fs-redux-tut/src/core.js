@@ -3,7 +3,8 @@ export const INITIAL_STATE = Map();
 
 //I hate functions like this: exchanging one line of code for another line of code that has implicit assumptions (such as state having a set method)
 export function setEntries(state, entries) {
-  return state.set('entries', List(entries));
+  return state.set('entries', List(entries))
+              .set('initialEntries', List(entries));
 }
 
 function getWinners(vote) {
@@ -63,4 +64,9 @@ export function vote(voteState, entry, voter) {
     entry,
     voter
   );
+}
+
+export function restart(state) {
+  return next(state.set('entries', state.get('initialEntries'))
+                   .delete('client'));
 }

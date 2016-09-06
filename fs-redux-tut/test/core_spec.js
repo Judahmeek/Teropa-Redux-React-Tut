@@ -1,18 +1,17 @@
 import {List, Map} from 'immutable';
 import {expect} from 'chai';
 
-import {setEntries, next, vote} from '../src/core';
+import {INITIAL_STATE, setEntries, next, vote, restart} from '../src/core';
 
 describe('functions', () => {
 
   describe('setEntries', () => {
       
     it('adds entries and makes them immutable', () => {
-      const state = Map();
-      const entries = ['Trainspotting', '28 Days Later'];
-      const nextState = setEntries(state, entries);
+      const nextState = setEntries(INITIAL_STATE, ['Pokemon', 'Digimon']);
       expect(nextState).to.equal(Map({
-        entries: List.of('Trainspotting', '28 Days Later')
+        entries: List.of('Pokemon', 'Digimon'),
+        initialEntries: List.of('Pokemon', 'Digimon')
       }));
     });
 
@@ -188,6 +187,34 @@ describe('functions', () => {
       }));
     });
   
+  });
+
+  describe('restart', () => {
+
+    it('returns to initial entries and takes the first two entries under vote', () => {
+      expect(
+        restart(Map({
+          client: Map({
+            vote: Map({
+              pair: List.of('oldOne', 'oldTwo')
+            })
+          }),
+          entries: List(),
+          initialEntries: List.of('Trainspotting', '28 Days Later', 'Sunshine')
+        }))
+      ).to.equal(
+        Map({
+          client: Map({
+            vote: Map({
+              pair: List.of('Trainspotting', '28 Days Later')
+            })
+          }),
+          entries: List.of('Sunshine'),
+          initialEntries: List.of('Trainspotting', '28 Days Later', 'Sunshine')
+        })
+      );
+    });
+
   });
 
 });

@@ -20,3 +20,10 @@ export function next() {
     type: 'NEXT'
   };
 }
+
+export function restart() {
+  return {
+    meta: {remote: true},
+    type: 'RESTART'
+  };
+}

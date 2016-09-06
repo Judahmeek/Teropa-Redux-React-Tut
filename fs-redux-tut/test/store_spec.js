@@ -13,7 +13,8 @@ describe('store', () => {
       entries: ['Trainspotting', '28 Days Later']
     });
     expect(store.getState()).to.equal(Map({
-      entries: List(['Trainspotting', '28 Days Later'])
+      entries: List(['Trainspotting', '28 Days Later']),
+      initialEntries: List(['Trainspotting', '28 Days Later'])
     }));
   });
 
