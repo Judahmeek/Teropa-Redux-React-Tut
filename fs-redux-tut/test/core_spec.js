@@ -14,7 +14,6 @@ describe('functions', () => {
         initialEntries: List.of('Pokemon', 'Digimon')
       }));
     });
-
   });
 
   describe('next', () => {

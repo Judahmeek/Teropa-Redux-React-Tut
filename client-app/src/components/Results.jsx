@@ -51,7 +51,7 @@ function mapStateToProps(state) {
     pair: state.getIn(['vote', 'pair']),
     tally: state.getIn(['vote', 'tally']),
     winner: state.get('winner')
-  }
+  };
 }
 
 export const ResultsContainer = connect(
